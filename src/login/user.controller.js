@@ -14,7 +14,7 @@ export const login = errorHandler(async (req, res, next) => {
   }
   await User.findByIdAndUpdate({_id: findEmail._id}, {_isActive: true});
   const token = jwt.sign({id: findEmail._id}, process.env.TOKEN);
-  res.send({message: `مرحبا ${findEmail.name}`, token}).status(200);
+  res.send({message: `مرحبا ${findEmail.name}`,user_info :findEmail, token}).status(200);
 });
 
 // add user
