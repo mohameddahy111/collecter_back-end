@@ -14,7 +14,7 @@ const carsSchema = new mongoose.Schema(
     ],
     cost: [
         {
-            create_by: {type: mongoose.Types.ObjectId , ref :"User"},
+         create_by: {type: mongoose.Types.ObjectId , ref :"User"},
         name: {type: String},
         price: {type: Number}
       }
