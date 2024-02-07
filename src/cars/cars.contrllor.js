@@ -9,10 +9,13 @@ export const addCar = errorHandler(async (req, res, next) => {
     return next(new AppError("الاسم مستخدم", 401));
   }
   await Cars.insertMany(req.body);
-  res.send("تم اضافة براد جديد").status(201);
+  res.send({message :"تم اضافة براد جديد"}).status(201);
 });
 
 export const getAllCars = errorHandler(async (req, res, next) => {
-  const cars = await Cars.find().populate("Payload.create_by", {name: 1});
+  const cars = await Cars.find().populate({
+    path: "Payload.create_by",
+    select: "name",
+  });
   res.send({cars}).status(200);
 });

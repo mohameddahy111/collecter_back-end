@@ -13,8 +13,10 @@ app.use(express.json())
 app.use(cors())
 app.use('/user' , userRouter)
 app.use('/cars' , carRouter)
-
-connect()
+app.use((err , req , res, next)=>{
+    res.status( err.statusCode  || 400).send({message : err.message});
+  })
+  connect()
 app.listen(process.env.PORT ||port, () => {
     console.log(`http://localhost:${port}`)
 })
