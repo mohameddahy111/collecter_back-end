@@ -6,7 +6,7 @@ export const addCar = errorHandler(async (req, res, next) => {
   const {name} = req.body;
   const isExist = await Cars.findOne({name: name});
   if (isExist) {
-    return next(new AppError("الاسم مستخدم", 401));
+    return next(new AppError({message:"الاسم مستخدم"}, 401));
   }
  await Cars.insertMany(req.body);
 
