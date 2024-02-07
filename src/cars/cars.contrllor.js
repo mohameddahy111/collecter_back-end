@@ -11,3 +11,8 @@ export const addCar = errorHandler(async (req, res, next) => {
   await Cars.insertMany(req.body);
   res.send("تم اضافة براد جديد").status(201);
 });
+
+export const getAllCars = errorHandler(async (req, res, next) => {
+  const cars = await Cars.find().populate("Payload.create_by", {name: 1});
+  res.send({cars}).status(200);
+});

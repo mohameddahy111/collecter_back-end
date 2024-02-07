@@ -1,6 +1,7 @@
 import express from 'express';
-import { addCar } from './cars.contrllor.js';
+import { addCar, getAllCars } from './cars.contrllor.js';
 
 const router = express.Router()
-router.post('/' , addCar)
+router.get('/' , getAllCars)
+router.post('/', addCar)
 export default router
