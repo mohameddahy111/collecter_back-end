@@ -34,12 +34,12 @@ carsSchema.pre("save", function () {
   let price = 0;
   let count = 0;
   let width = 0;
-    let cost = 0;
+  let cost = 0;
   this.Payload.forEach((ele) => {
-    price = price + (ele.price * ele.width || ele.count);
+    price =
+      price + (ele.width == 0 ? ele.price * ele.count : ele.price * ele.width);
     width = width + ele.width;
-      count = count + ele.count;
-    
+    count = count + ele.count;
   });
   this.cost.forEach((ele) => {
     cost = cost + ele.price;

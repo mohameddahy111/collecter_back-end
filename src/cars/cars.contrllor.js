@@ -31,7 +31,7 @@ export const addProdect = errorHandler(async (req, res, next) => {
     res.send({message: "تم اضافة منتج"}).status(201);
   } else {
     isExist.width = isExist.width + req.body.width;
-    isExist.price = isExist.price + req.body.price;
+    // isExist.price = isExist.price + req.body.price;
     isExist.count = isExist.count + req.body.count;
     findtItem.save();
     res.send({message: "تم تعديل المنتح"}).status(200);
