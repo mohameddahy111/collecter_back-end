@@ -22,18 +22,23 @@ export const getAllCars = errorHandler(async (req, res, next) => {
 });
 export const addProdect = errorHandler(async (req, res, next) => {
   const {id} = req.params;
-  const {name , price} = req.body;
+  const {name, price} = req.body;
   const findtItem = await Cars.findOne({_id: id});
-  const isExist = findtItem.Payload.find((x) => x.name == name);
-  if (!isExist ||(isExist && isExist.price!=price)) {
-    findtItem.Payload.push(req.body);
+  const isExist = findtItem.Payload.filter((x) => x.name == name);
+  if (isExist.length == 0) {
+    findtItem.Payload.push(req.body); 
     findtItem.save();
     res.send({message: "تم اضافة منتج"}).status(201);
   } else {
-    isExist.width = isExist.width + req.body.width;
-    // isExist.price = isExist.price + req.body.price;
-    isExist.count = isExist.count + req.body.count;
-    findtItem.save();
+    const samePrice = isExist?.find((ele) => ele.price == price);
+    if (samePrice) {
+      samePrice.width = samePrice.width + req.body.width;
+      samePrice.count = samePrice.count + req.body.count;
+      findtItem.save();
+    } else {
+      findtItem.Payload.push(req.body);
+      findtItem.save();
+    }
     res.send({message: "تم تعديل المنتح"}).status(200);
   }
 });
