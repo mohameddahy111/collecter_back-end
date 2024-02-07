@@ -5,16 +5,17 @@ const carsSchema = new mongoose.Schema(
     drivier_name: {type: String, required: true},
     Payload: [
       {
-        create_by: {type: mongoose.Types.ObjectId , ref :"User"},
+        create_by: {type: mongoose.Types.ObjectId, ref: "User"},
         name: {type: String},
         width: {type: Number},
         price: {type: Number},
-        count: {type: Number}
+        count: {type: Number},
+        add_date: {type: String, default: new Date()}
       }
     ],
     cost: [
-        {
-         create_by: {type: mongoose.Types.ObjectId , ref :"User"},
+      {
+        create_by: {type: mongoose.Types.ObjectId, ref: "User"},
         name: {type: String},
         price: {type: Number}
       }

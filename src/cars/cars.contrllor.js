@@ -20,3 +20,20 @@ export const getAllCars = errorHandler(async (req, res, next) => {
   });
   res.send({cars}).status(200);
 });
+export const addProdect = errorHandler(async (req, res, next) => {
+    const { id } = req.params
+    const {name} = req.body
+    const fintItem = await Cars.findOne({ _id: id });
+    fintItem.Payload.map(async(item) => {
+        if (item.name != name) {
+            const list = fintItem.Payload.push(req.body)
+            await Cars.findByIdAndUpdate(id , {Payload : list} , {new: true})
+        } else {
+            
+        }
+    })
+
+    
+    res.send({fintItem}).status(200);
+});
+
