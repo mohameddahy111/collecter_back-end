@@ -7,10 +7,10 @@ export const login = errorHandler(async (req, res, next) => {
   const {email, password} = req.body;
   const findEmail = await User.findOne({email: email});
   if (!findEmail) {
-    return next(new AppError("البريد الاكتروني غير صحيح", 404));
+    return next(new AppError("البريد الاكتروني غير صحيح", 402));
   }
   if (findEmail.password !== password) {
-    return next(new AppError(" كلمة المرور غير صحيح", 404));
+    return next(new AppError(" كلمة المرور غير صحيح", 401));
   }
   await User.findByIdAndUpdate({_id: findEmail._id}, {_isActive: true});
   const token = jwt.sign({id: findEmail._id}, process.env.TOKEN);
