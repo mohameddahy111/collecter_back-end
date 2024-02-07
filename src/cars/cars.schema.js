@@ -10,7 +10,8 @@ const carsSchema = new mongoose.Schema(
         width: {type: Number},
         price: {type: Number},
         count: {type: Number},
-        add_date: {type: String, default: new Date()}
+        totle: {type: Number},
+        add_date: {type: String, default: new Date().toDateString()}
       }
     ],
     cost: [
@@ -30,10 +31,23 @@ const carsSchema = new mongoose.Schema(
 );
 
 carsSchema.pre("save", function () {
-  this.totle_Prodect_value = this.Payload.reduce((a, c) => a + c.price, 0);
-  this.totle_cost_value = this.cost.reduce((a, c) => a + c.price, 0);
-  this.totle_width = this.Payload.reduce((a, c) => a + c.width, 0);
-  this.totle_Price =this.totle_Prodect_value+ this.totle_cost_value 
+  let price = 0;
+  let count = 0;
+  let width = 0;
+    let cost = 0;
+  this.Payload.forEach((ele) => {
+    price = price + (ele.price * ele.width || ele.count);
+    width = width + ele.width;
+      count = count + ele.count;
+    
+  });
+  this.cost.forEach((ele) => {
+    cost = cost + ele.price;
+  });
+
+  this.totle_Prodect_value = price;
+  this.totle_width = width;
+  this.totle_Price = price + cost;
 });
 
 const Cars = mongoose.model("Cars", carsSchema);
