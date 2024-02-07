@@ -22,10 +22,10 @@ export const getAllCars = errorHandler(async (req, res, next) => {
 });
 export const addProdect = errorHandler(async (req, res, next) => {
   const {id} = req.params;
-  const {name} = req.body;
+  const {name , price} = req.body;
   const findtItem = await Cars.findOne({_id: id});
   const isExist = findtItem.Payload.find((x) => x.name == name);
-  if (!isExist) {
+  if (!isExist ||(isExist && isExist.price!=price)) {
     findtItem.Payload.push(req.body);
     findtItem.save();
     res.send({message: "تم اضافة منتج"}).status(201);
