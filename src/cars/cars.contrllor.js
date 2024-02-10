@@ -20,25 +20,40 @@ export const getAllCars = errorHandler(async (req, res, next) => {
   });
   res.send({cars}).status(200);
 });
-export const addProdect = errorHandler(async (req, res, next) => {
+// export const addProdect = errorHandler(async (req, res, next) => {
+//   const {id} = req.params;
+//   const {name, price} = req.body;
+//   const findtItem = await Cars.findOne({_id: id});
+//   const isExist = findtItem.Payload.filter((x) => x.name == name);
+//   if (isExist.length == 0) {
+//     findtItem.Payload.push(req.body);
+//     findtItem.save();
+//     res.send({message: "تم اضافة منتج"}).status(201);
+//   } else {
+//     const samePrice = isExist?.find((ele) => ele.price == price);
+//     if (samePrice) {
+//       samePrice.width = samePrice.width + req.body.width;
+//       samePrice.count = samePrice.count + req.body.count;
+//       findtItem.save();
+//     } else {
+//       findtItem.Payload.push(req.body);
+//       findtItem.save();
+//     }
+//     res.send({message: "تم تعديل المنتح"}).status(200);
+//   }
+// });
+export const addCost = errorHandler(async (req, res, next) => {
   const {id} = req.params;
   const {name, price} = req.body;
-  const findtItem = await Cars.findOne({_id: id});
-  const isExist = findtItem.Payload.filter((x) => x.name == name);
-  if (isExist.length == 0) {
-    findtItem.Payload.push(req.body); 
-    findtItem.save();
-    res.send({message: "تم اضافة منتج"}).status(201);
+  const findItem = await Cars.findById(id);
+  const isExist = findItem.cost.find((ele) => ele.name === name);
+  if (isExist) {
+    isExist.price = isExist.price + price;
+    findItem.save();
+    res.send({message: "تم تعديل التكلفة"}).status(200);
   } else {
-    const samePrice = isExist?.find((ele) => ele.price == price);
-    if (samePrice) {
-      samePrice.width = samePrice.width + req.body.width;
-      samePrice.count = samePrice.count + req.body.count;
-      findtItem.save();
-    } else {
-      findtItem.Payload.push(req.body);
-      findtItem.save();
-    }
-    res.send({message: "تم تعديل المنتح"}).status(200);
+    findItem.cost.push(req.body);
+    findItem.save();
+    res.send({message: "تم اضافة التكلفة"}).status(200);
   }
 });
