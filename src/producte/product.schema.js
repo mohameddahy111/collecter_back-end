@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
-    car_id: {type: mongoose.Types.ObjectId, ref: "Cars"},
-    createBy: {type: mongoose.Types.ObjectId, ref: "User"},
+    car_id: {type: mongoose.Types.ObjectId, ref:"Cars"},
     items: [
       {
+        createBy: {type: mongoose.Types.ObjectId, ref: "User"},
         name: {type: String, required: true},
         price: {type: Number, required: true},
         width: {type: Number},
@@ -17,7 +17,7 @@ const productSchema = new mongoose.Schema(
     total_produce_value: {type: Number},
     total_produce_width: {type: Number}
   },
-  {timestamps: true}
+  {timestamps: true , toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
 productSchema.pre("save", function () {

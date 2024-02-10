@@ -23,13 +23,13 @@ export const addProdect = errorHandler(async (req, res, next) => {
       findCar.save();
       res.send({message: "تم تعديل منتج"}).status(200);
     } else {
-      const newProdect = new Product({
-        car_id: id,
-        createBy: req.userId,
-        items: req.body
-      });
-      await newProdect.save();
+      findCar.items.push(req.body);
+      findCar.save()
       res.send({message: "تم اضافة منتج"}).status(200);
     }
   }
 });
+export const getAllProdect = errorHandler(async (req, res, next) => {
+  const Prodects = await Product.find().populate([{path :"items.createBy" , select :['name']}])
+  res.send(Prodects).status(200);
+})
