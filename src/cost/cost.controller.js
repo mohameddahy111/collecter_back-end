@@ -17,7 +17,7 @@ export const addCost = errorHandler(async (req, res, next) => {
     const isExist = allCosts.costs.find((x) => x.name == name);
     // const findItem = isExist.find(x=> x.price == price)
     if (isExist) {
-      isExist.price = isExist.price + price;
+      isExist.price = +isExist.price + +price;
       allCosts.save();
       res.send({message: "تم تعديل تكلفة"}).status(200);
     } else {
