@@ -4,7 +4,7 @@ const carsSchema = new mongoose.Schema(
     name: {type: String, required: true},
     drivier_name: {type: String, required: true},
     // Payload: {type: mongoose.Types.ObjectId, ref: "Product"},
-    cost: {type: String},
+    // cost: {type: String},
     drive_mony: {type: Number},
     totle_Price: {type: Number, default: 0},
     totle_Prodect_value: {type: Number, default: 0},
@@ -16,6 +16,11 @@ const carsSchema = new mongoose.Schema(
 
 carsSchema.virtual("items", {
   ref: "Product",
+  localField: "_id",
+  foreignField:"car_id"
+})
+carsSchema.virtual("costs", {
+  ref: "Cost",
   localField: "_id",
   foreignField:"car_id"
 })

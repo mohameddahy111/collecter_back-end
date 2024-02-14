@@ -5,7 +5,6 @@ export const addProdect = errorHandler(async (req, res, next) => {
   const {id} = req.params;
   const {name, price} = req.body;
   const findCar = await Product.findOne({car_id: id});
-  console.log(findCar);
   if (!findCar) {
       const newProdect = new Product({
           car_id: id,
