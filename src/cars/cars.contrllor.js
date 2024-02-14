@@ -20,5 +20,13 @@ export const getAllCars = errorHandler(async (req, res, next) => {
   ]);
   res.send({cars}).status(200);
 });
+export const getAllCarDetails = errorHandler(async (req, res, next) => {
+  const {id} =req.params
+  const car = await Cars.findOne({_id : id}).populate([
+    {path: "items", populate: {path: "items.createBy", select: "name"}},
+    {path: "costs", populate: {path: "costs.createBy", select: "name"}},
+  ]);
+  res.send({car}).status(200);
+});
 
 
