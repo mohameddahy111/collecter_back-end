@@ -14,7 +14,8 @@ export const addCost = errorHandler(async (req, res, next) => {
     cost.save();
     res.send({message: "تم اضافة تكلفة"}).status(200);
   } else {
-    const isExist = allCosts.costs.map((x) => x.name === name);
+    const isExist = allCosts.costs.find((x) => x.name == name);
+    // const findItem = isExist.find(x=> x.price == price)
     if (isExist) {
       isExist.price = isExist.price + price;
       allCosts.save();
