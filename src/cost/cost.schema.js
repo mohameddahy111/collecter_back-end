@@ -11,7 +11,16 @@ const costSchema = new mongoose.Schema({
     }
   ],
   total_cost: {type: Number}
-},{timestamps: true , toJSON:{virtuals : true}, toObject:{virtuals :true}});
+}, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } });
+
+costSchema.pre("save", function () {
+  let price = 0;
+  this.costs.forEach((ele) => {
+  price = price +ele.price
+  });
+this.total_cost= price
+});
+
 
 const Cost = mongoose.model("Cost", costSchema);
 export default Cost;
