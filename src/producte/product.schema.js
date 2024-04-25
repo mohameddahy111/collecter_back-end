@@ -10,10 +10,12 @@ const productSchema = new mongoose.Schema(
         price: {type: Number, required: true},
         width: {type: Number},
         count: {type: Number},
-        total: {type: Number},
+        total: { type: Number },
+        mediation:{type:Number},
         add_date: {type: String, default: new Date().toDateString()}
       }
     ],
+    sell:{type:Number},
     total_produce_value: {type: Number},
     total_produce_width: {type: Number},
     total_produce_count: {type: Number},
@@ -26,11 +28,12 @@ productSchema.pre("save", function () {
   let width = 0;
 let count = 0
   this.items.forEach((ele) => {
-      ele.total = ele.width == 0 ? ele.price * ele.count : ele.price * ele.width;
+      ele.total = (ele.width == 0 ? ele.price * ele.count : ele.price * ele.width)+ele.mediation;
       width = width + ele.width 
       price = price +ele.total
       count = count +ele.count
   });
+
     this.total_produce_value = price;
     this.total_produce_width = width
     this.total_produce_count = count
